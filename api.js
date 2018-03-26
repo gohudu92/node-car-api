@@ -4,7 +4,7 @@ const express        = require('express');
 const app            = express();
 const port = 8000;
 var client = new elasticsearch.Client({
-  host: 'localhost:9200',
+  host: 'localhost:9292',
   log: 'trace'
 });
 
@@ -66,7 +66,13 @@ app.get('/suv', (req, res) => {
       console.log(response);
       console.log("--- Hits ---");
       response.hits.hits.forEach(function(hit){
-        tab.push(hit);
+        if(i == 20){
+          break;
+        }
+        else{
+          tab.push(hit);
+          i++;
+        }
       })
       res.send(tab);
     }
