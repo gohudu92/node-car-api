@@ -30,7 +30,7 @@ app.post('/populate', (req, res) => {
   var cars = [];
   obj.forEach(function(model)
   {
-    cars.push( {index : { _index: 'voitures', _type: 'voiture', _id: i }})
+    cars.push( {index : { _index: 'cars', _type: 'car', _id: i }})
     cars.push({ doc: model})
     i++
   })
@@ -49,8 +49,8 @@ app.post('/populate', (req, res) => {
 app.get('/suv', (req, res) => {
   var tab = [];
   client.search({
-  index: 'voitures',
-  type: 'voiture',
+  index: 'cars',
+  type: 'car',
   body: {
     "sort" : [
   	   {"doc.volume":{"order" : "desc"}}
@@ -66,13 +66,7 @@ app.get('/suv', (req, res) => {
       console.log(response);
       console.log("--- Hits ---");
       response.hits.hits.forEach(function(hit){
-        if(i == 20){
-          break;
-        }
-        else{
           tab.push(hit);
-          i++;
-        }
       })
       res.send(tab);
     }
